@@ -1,0 +1,36 @@
+{
+  "name": "redisession",
+  "version": "0.1.0",
+  "description": "Session with redis.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src",
+    "test": "ts-node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/DevinDon/redisession.git"
+  },
+  "private": false,
+  "keywords": [
+    "session",
+    "redis",
+    "koa"
+  ],
+  "author": "Devin Don <DevinDon@Foxmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DevinDon/redisession/issues"
+  },
+  "homepage": "https://github.com/DevinDon/redisession#readme",
+  "dependencies": {
+    "ioredis": "^4.3.0",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/ioredis": "^4.0.4",
+    "@types/koa": "^2.0.47"
+  }
+}
