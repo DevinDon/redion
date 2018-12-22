@@ -26,7 +26,12 @@ export class RediSession {
     koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
     this.redis = new RedisInstance(sessionOptions.redis);
     this.getCookieOptions = { signed: true };
-    this.setCookieOptions = { domain: sessionOptions.domain, httpOnly: sessionOptions.httpOnly, maxAge: sessionOptions.maxAge, signed: true };
+    this.setCookieOptions = {
+      domain: sessionOptions.domain,
+      httpOnly: sessionOptions.httpOnly,
+      maxAge: sessionOptions.maxAge,
+      signed: true
+    };
   }
 
   /**
@@ -34,7 +39,7 @@ export class RediSession {
    * @param c Context.
    * @param next Next.
    */
-  public async middleware(c: Koa.Context, next: () => Promise<any>): Promise<void> {
+  public async session(c: Koa.Context, next: () => Promise<any>): Promise<void> {
     next();
     /** Session id. */
     let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
@@ -97,7 +102,7 @@ export class RediSession {
    * Get this ware.
    */
   public get ware(): Middleware {
-    return this.middleware;
+    return this.session.bind(this);
   }
 
 }
