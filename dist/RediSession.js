@@ -19,25 +19,20 @@ class RediSession {
         };
     }
     async session(c, next) {
-        next();
         let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
-        if (id) {
-            if (await this.refresh(id)) {
-                c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-            }
-            else {
-                c.cookies.set(this.sessionOptions.name);
-            }
+        const time = Date.now();
+        if ((id && await this.refresh(id))) {
+            c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+        }
+        else if (await this.add({ id: id = this.generate(), time })) {
+            c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+            c.session = { id, time };
         }
         else {
-            id = this.generate();
-            if (await this.add({ id, time: Date.now() })) {
-                c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-            }
-            else {
-                c.cookies.set(this.sessionOptions.name);
-            }
+            c.cookies.set(this.sessionOptions.name);
+            c.session = { id: '', time: 0 };
         }
+        await next();
     }
     async add(session) {
         await this.redis.hmset(session.id, 'time', session.time);

@@ -1,7 +1,7 @@
 {
-  "name": "redisession",
+  "name": "redisession.source",
   "version": "0.0.0",
-  "description": "Session with redis.",
+  "description": "Source code of redisession.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",

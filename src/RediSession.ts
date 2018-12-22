@@ -40,23 +40,21 @@ export class RediSession {
    * @param next Next.
    */
   public async session(c: Koa.Context, next: () => Promise<any>): Promise<void> {
-    next();
     /** Session id. */
     let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
-    if (id) { // has own session id
-      if (await this.refresh(id)) { // refresh session max age
-        c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-      } else { // clear session id
-        c.cookies.set(this.sessionOptions.name);
-      }
-    } else { // generate a new session id
-      id = this.generate();
-      if (await this.add({ id, time: Date.now() })) { // add new session id to cookie
-        c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-      } else { // clear session id
-        c.cookies.set(this.sessionOptions.name);
-      }
+    const time: number = Date.now();
+    if ((id && await this.refresh(id))) { // has own session id and refresh session max age successfully
+      c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+    } else if (await this.add({ id: id = this.generate(), time })) { // or generate a new session successfully
+      c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+      // set session info
+      c.session = { id, time };
+    } else { // if both failed, clear session id
+      c.cookies.set(this.sessionOptions.name);
+      // clear session info
+      c.session = { id: '', time: 0 };
     }
+    await next();
   }
 
   /**
