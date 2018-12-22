@@ -1,9 +1,4 @@
 import { RedisOptions } from 'ioredis';
-/** User infomation. */
-export interface User {
-    id: string;
-    name: string;
-}
 /** Session infomation. */
 export interface Session {
     id: string;
