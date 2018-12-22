@@ -9,7 +9,6 @@ export interface User {
 /** Session infomation. */
 export interface Session {
   id: string;
-  time: number;
   [index: string]: any;
 }
 
