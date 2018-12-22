@@ -7,7 +7,7 @@ export declare class RediSession {
     private getCookieOptions;
     private setCookieOptions;
     constructor(koa: Koa, sessionOptions?: Options);
-    middleware(c: Koa.Context, next: () => Promise<any>): Promise<void>;
+    session(c: Koa.Context, next: () => Promise<any>): Promise<void>;
     add(session: Session): Promise<boolean>;
     delete(id: string): Promise<number>;
     disconnect(): void;
