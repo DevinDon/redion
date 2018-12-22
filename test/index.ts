@@ -1,22 +1,9 @@
-import { Middleware } from 'koa';
-import { Session } from '../src';
+import Koa, { Middleware } from 'koa';
+import { RediSession } from '../src';
 
-const a: Middleware = async (c, next) => {
-  // c.session.id
-};
+const app = new Koa();
+const session = new RediSession(app, { name: 'session.id' }).ware;
 
-// class A {
-//   private t = 1;
-//   test() {
-//     console.log(this.t);
-//   }
-// }
+app.use(session);
 
-// class B {
-//   private t = 2;
-// }
-
-// const a = new A();
-// const b = new B();
-
-// a.test.bind(b)();
+app.listen(80);
