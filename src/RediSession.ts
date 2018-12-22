@@ -15,8 +15,8 @@ export class RediSession {
 
   /**
    * Config your own session pool.
-   * @param koa Koa instance.
-   * @param sessionOptions Session options.
+   * @param {Koa} koa Koa instance.
+   * @param {Options} sessionOptions Session options.
    */
   constructor(
     private koa: Koa,
@@ -36,68 +36,86 @@ export class RediSession {
 
   /**
    * RediSession middleware.
-   * @param c Context.
-   * @param next Next.
+   * @param {Koa.Context} c Context.
+   * @param {Promise<any>} next Next.
+   * @returns {Promise<void>} void.
    */
   public async session(c: Koa.Context, next: () => Promise<any>): Promise<void> {
     /** Session id. */
     let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
-    const time: number = Date.now();
-    if ((id && await this.refresh(id))) { // has own session id and refresh session max age successfully
+    if ((id && await this.refresh(id)) || await this.add({ id: id = this.generate() })) {
+      // Client has own session id and refresh session max age successfully,
+      // or generate a new session successfully.
       c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-    } else if (await this.add({ id: id = this.generate(), time })) { // or generate a new session successfully
-      c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
-      // set session info
-      c.session = { id, time };
-    } else { // if both failed, clear session id
-      c.cookies.set(this.sessionOptions.name);
-      // clear session info
-      c.session = { id: '', time: 0 };
+      c.session = await this.get(id);
+    } else { // If both failed, clear session id. Maybe redis server is down.
+      c.cookies.set(this.sessionOptions.name, undefined, { maxAge: 0 });
+      c.session = { id: '' };
     }
     await next();
+    // Update session object in redis.
+    await this.add(c.session);
   }
 
   /**
    * Add or update a new session to pool.
-   * @param session Session info.
+   * @param {Session} session Session info.
+   * @returns {Promise<boolean>} Successed refresh or not.
    */
   public async add(session: Session): Promise<boolean> {
-    await this.redis.hmset(session.id, 'time', session.time);
+    await this.redis.hmset(session.id, 'session', JSON.stringify(session));
     return this.refresh(session.id);
   }
 
   /**
    * Delete session by session id.
-   * @param id Session id.
+   * @param {string} id Session id.
+   * @returns {number} Delete count.
    */
   public async delete(id: string): Promise<number> {
     return await this.redis.del(id);
   }
 
-  /** Destory this pool instance. */
+  /**
+   * Destory this pool instance.
+   * @returns {void} void.
+   */
   public disconnect() {
     this.redis.disconnect();
   }
 
   /**
-   * Generate a new session id.
-   * @returns New session id.
+   * Generate a new session id with time.
+   * @returns {string} New session id.
    */
   public generate(): string {
-    return String(Date.now()) + String(Math.random()).slice(0, 5);
+    return String(Date.now()) + String(Math.random()).slice(1, 7);
+  }
+
+  /**
+   * Get session object.
+   * @param {string} id Session id.
+   * @returns {Promise<Session>} Session object. If no such session, return empty id.
+   */
+  public async get(id: string): Promise<Session> {
+    try {
+      return JSON.parse((await this.redis.hget(id, 'session')) as string);
+    } catch (err) {
+      return { id: '' };
+    }
   }
 
   /**
    * Refresh exprise time, second.
-   * @param id Session id.
-   * @returns True of false.
+   * @param {string} id Session id.
+   * @returns {boolean} Set exprise successed or not.
    */
   public async refresh(id: string): Promise<boolean> {
     return Boolean(await this.redis.expire(id, this.sessionOptions.maxAge || 3600));
   }
 
   /**
-   * Get this ware.
+   * @returns {Middleware} Return this ware.
    */
   public get ware(): Middleware {
     return this.session.bind(this);
