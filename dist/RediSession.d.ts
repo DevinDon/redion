@@ -1,7 +1,7 @@
 /// <reference types="koa-compose" />
 import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
-export declare class SessionManager {
+export declare class RediSession {
     private koa;
     private sessionOptions;
     private redis;
@@ -16,4 +16,4 @@ export declare class SessionManager {
     refresh(id: string): Promise<boolean>;
     readonly ware: import("koa-compose").Middleware<Koa.Context>;
 }
-export default SessionManager;
+export default RediSession;
