@@ -1,6 +1,6 @@
 {
   "name": "redisession",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Session with redis.",
   "main": "index.js",
   "scripts": {
