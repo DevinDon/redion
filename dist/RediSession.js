@@ -16,7 +16,13 @@ class RediSession {
     constructor(koa, sessionOptions = { name: 'session.id' }) {
         this.koa = koa;
         this.sessionOptions = sessionOptions;
-        this.middleware = (c, next) => __awaiter(this, void 0, void 0, function* () {
+        koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
+        this.redis = new ioredis_1.default(sessionOptions.redis);
+        this.getCookieOptions = { signed: true };
+        this.setCookieOptions = { domain: sessionOptions.domain, httpOnly: sessionOptions.httpOnly, maxAge: sessionOptions.maxAge, signed: true };
+    }
+    middleware(c, next) {
+        return __awaiter(this, void 0, void 0, function* () {
             next();
             let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
             if (id) {
@@ -37,10 +43,6 @@ class RediSession {
                 }
             }
         });
-        koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
-        this.redis = new ioredis_1.default(sessionOptions.redis);
-        this.getCookieOptions = { signed: true };
-        this.setCookieOptions = { domain: sessionOptions.domain, httpOnly: sessionOptions.httpOnly, maxAge: sessionOptions.maxAge, signed: true };
     }
     add(session) {
         return __awaiter(this, void 0, void 0, function* () {

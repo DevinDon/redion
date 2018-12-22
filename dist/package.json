@@ -1,6 +1,6 @@
 {
   "name": "redisession",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Session with redis.",
   "main": "index.js",
   "scripts": {
@@ -25,12 +25,12 @@
   },
   "homepage": "https://github.com/DevinDon/redisession#readme",
   "dependencies": {
+    "@types/ioredis": "^4.0.4",
     "ioredis": "^4.3.0",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   },
   "devDependencies": {
-    "@types/ioredis": "^4.0.4",
     "@types/koa": "^2.0.47"
   }
 }

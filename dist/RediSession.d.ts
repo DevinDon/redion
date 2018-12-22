@@ -1,4 +1,3 @@
-/// <reference types="koa-compose" />
 import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 export declare class RediSession {
@@ -8,12 +7,12 @@ export declare class RediSession {
     private getCookieOptions;
     private setCookieOptions;
     constructor(koa: Koa, sessionOptions?: Options);
-    readonly middleware: Middleware;
+    middleware(c: Koa.Context, next: () => Promise<any>): Promise<void>;
     add(session: Session): Promise<boolean>;
     delete(id: string): Promise<number>;
     disconnect(): void;
     generate(): string;
     refresh(id: string): Promise<boolean>;
-    readonly ware: import("koa-compose").Middleware<Koa.Context>;
+    readonly ware: Middleware;
 }
 export default RediSession;

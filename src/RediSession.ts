@@ -1,5 +1,5 @@
 import { GetOption, SetOption } from 'cookies';
-import RedisInstance, { RedisOptions, Redis } from 'ioredis';
+import RedisInstance, { Redis } from 'ioredis';
 import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 
@@ -22,13 +22,19 @@ export class RediSession {
     private koa: Koa,
     private sessionOptions: Options = { name: 'session.id' }
   ) {
+    // Set secert keys to encrypt cookies.
     koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
     this.redis = new RedisInstance(sessionOptions.redis);
     this.getCookieOptions = { signed: true };
     this.setCookieOptions = { domain: sessionOptions.domain, httpOnly: sessionOptions.httpOnly, maxAge: sessionOptions.maxAge, signed: true };
   }
 
-  public readonly middleware: Middleware = async (c, next) => {
+  /**
+   * RediSession middleware.
+   * @param c Context.
+   * @param next Next.
+   */
+  public async middleware(c: Koa.Context, next: () => Promise<any>): Promise<void> {
     next();
     /** Session id. */
     let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
@@ -90,7 +96,7 @@ export class RediSession {
   /**
    * Get this ware.
    */
-  public get ware() {
+  public get ware(): Middleware {
     return this.middleware;
   }
 
