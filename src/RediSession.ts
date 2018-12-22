@@ -4,7 +4,7 @@ import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 
 /** Session middleware class. */
-export class SessionManager {
+export class RediSession {
 
   /** Redis connection. */
   private redis: Redis;
@@ -96,4 +96,4 @@ export class SessionManager {
 
 }
 
-export default SessionManager;
+export default RediSession;
