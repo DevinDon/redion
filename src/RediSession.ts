@@ -19,7 +19,7 @@ export class RediSession {
    * @param {Options} sessionOptions Session options.
    */
   constructor(
-    private koa: Koa,
+    koa: Koa,
     private sessionOptions: Options = { name: 'session.id' }
   ) {
     // Set secert keys to encrypt cookies.
@@ -28,6 +28,7 @@ export class RediSession {
     this.getCookieOptions = { signed: true };
     this.setCookieOptions = {
       domain: sessionOptions.domain,
+      expires: new Date(Date.now() + (sessionOptions.maxAge || 3600) * 1000),
       httpOnly: sessionOptions.httpOnly,
       maxAge: sessionOptions.maxAge,
       signed: true

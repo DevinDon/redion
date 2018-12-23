@@ -10,6 +10,14 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 [NPM](https://www.npmjs.com/package/redisession)
 
+# Change Log
+
+[Full Change Log](https://github.com/DevinDon/redisession/blob/master/dist/CHANGELOG.md)
+
+## 0.2.2 => 0.2.3
+
+- Fixed expires time.
+
 # Usage
 
 ## Quick start

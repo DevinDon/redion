@@ -2,7 +2,6 @@ import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 /** Session middleware class. */
 export declare class RediSession {
-    private koa;
     private sessionOptions;
     /** Redis connection. */
     private redis;
