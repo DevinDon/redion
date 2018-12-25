@@ -13,16 +13,17 @@ class RediSession {
      */
     constructor(koa, sessionOptions = { name: 'session.id' }) {
         this.sessionOptions = sessionOptions;
+        sessionOptions.maxAge = sessionOptions.maxAge ? sessionOptions.maxAge : 3600;
         // Set secert keys to encrypt cookies.
         koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
         this.redis = new ioredis_1.default(sessionOptions.redis);
         this.getCookieOptions = { signed: true };
         this.setCookieOptions = {
             domain: sessionOptions.domain,
-            expires: new Date(Date.now() + (sessionOptions.maxAge || 3600) * 1000),
             httpOnly: sessionOptions.httpOnly,
             maxAge: sessionOptions.maxAge,
-            signed: true
+            signed: true,
+            overwrite: true
         };
     }
     /**
@@ -37,7 +38,7 @@ class RediSession {
         if ((id && await this.refresh(id)) || await this.add({ id: id = this.generate() })) {
             // Client has own session id and refresh session max age successfully,
             // or generate a new session successfully.
-            c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+            c.cookies.set(this.sessionOptions.name, id, this.updateExpiresTime());
             c.session = await this.get(id);
         }
         else { // If both failed, clear session id. Maybe redis server is down.
@@ -99,6 +100,14 @@ class RediSession {
      */
     async refresh(id) {
         return Boolean(await this.redis.expire(id, this.sessionOptions.maxAge || 3600));
+    }
+    /**
+     * Update exprise time in setCookieOptions.
+     * @returns {SetOption} this.setCookieOptions.
+     */
+    updateExpiresTime() {
+        this.setCookieOptions.expires = new Date(Date.now() + (this.sessionOptions.maxAge || 3600) * 1000);
+        return this.setCookieOptions;
     }
     /**
      * @returns {Middleware} Return this ware.
