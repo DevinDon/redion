@@ -1,4 +1,3 @@
-import { SetOption } from 'cookies';
 import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 /** Session middleware class. */
@@ -57,11 +56,6 @@ export declare class RediSession {
      * @returns {boolean} Set exprise successed or not.
      */
     refresh(id: string): Promise<boolean>;
-    /**
-     * Update exprise time in setCookieOptions.
-     * @returns {SetOption} this.setCookieOptions.
-     */
-    updateExpiresTime(): SetOption;
     /**
      * @returns {Middleware} Return this ware.
      */
