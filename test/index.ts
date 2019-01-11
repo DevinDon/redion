@@ -1,8 +1,8 @@
-import Koa, { Middleware } from 'koa';
-import { RediSession } from '../src';
+import Koa from 'koa';
+import { RediSession } from '../dist';
 
 const app = new Koa();
-const session = new RediSession(app, { name: 'session.id' }).ware;
+const session = new RediSession(app, { domain: 'localhost' }).ware;
 
 app.use(session);
 
