@@ -6,14 +6,14 @@ export interface Session {
 }
 /** Session middleware options. */
 export interface Options {
-    /** Expire time, second. */
-    maxAge?: number;
     /** Domain. */
-    domain?: string;
+    domain: string;
     /** Http Only. */
     httpOnly?: boolean;
+    /** Expire time, second. */
+    maxAge?: number;
     /** Name of session id. */
-    name: string;
+    name?: string;
     /** Can be overwrite. */
     overwrite?: boolean;
     /** Redis connection options. */

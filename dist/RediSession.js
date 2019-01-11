@@ -9,22 +9,36 @@ class RediSession {
     /**
      * Config your own session pool.
      * @param {Koa} koa Koa instance.
-     * @param {Options} sessionOptions Session options.
+     * @param {Options} options Session options.
      */
-    constructor(koa, sessionOptions = { name: 'session.id' }) {
-        this.sessionOptions = sessionOptions;
-        sessionOptions.maxAge = sessionOptions.maxAge ? sessionOptions.maxAge : 3600 * 24;
-        // Set secert keys to encrypt cookies.
-        koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
-        this.redis = new ioredis_1.default(sessionOptions.redis);
+    constructor(koa, options) {
+        this.koa = koa;
+        this.options = options;
+        this.options = Object.assign({}, {
+            domain: 'localhost',
+            httpOnly: true,
+            maxAge: 24 * 3600 * 1000,
+            name: 'session.id',
+            overwrite: true,
+            redis: {},
+            secert: ['default', 'secert', 'keys']
+        }, options);
+        this.init();
+    }
+    /**
+     * Init RediSession.
+     */
+    async init() {
         this.getCookieOptions = { signed: true };
         this.setCookieOptions = {
-            domain: sessionOptions.domain,
-            httpOnly: sessionOptions.httpOnly,
-            maxAge: sessionOptions.maxAge * 1000,
+            domain: this.options.domain,
+            httpOnly: this.options.httpOnly,
+            maxAge: this.options.maxAge * 1000,
             signed: true,
-            overwrite: true
+            overwrite: this.options.overwrite
         };
+        this.koa.keys = this.options.secert;
+        this.redis = new ioredis_1.default(this.options.redis);
     }
     /**
      * RediSession middleware.
@@ -34,15 +48,16 @@ class RediSession {
      */
     async session(c, next) {
         /** Session id. */
-        let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
+        let id = c.cookies.get(this.options.name, this.getCookieOptions);
+        // let address = c.
         if ((id && await this.refresh(id)) || await this.add({ id: id = this.generate() })) {
             // Client has own session id and refresh session max age successfully,
             // or generate a new session successfully.
-            c.cookies.set(this.sessionOptions.name, id, this.setCookieOptions);
+            c.cookies.set(this.options.name, id, this.setCookieOptions);
             c.session = await this.get(id);
         }
         else { // If both failed, clear session id. Maybe redis server is down.
-            c.cookies.set(this.sessionOptions.name, undefined, { maxAge: 0 });
+            c.cookies.set(this.options.name, undefined, { maxAge: 0 });
             c.session = { id: '' };
         }
         await next();
@@ -78,7 +93,7 @@ class RediSession {
      * @returns {string} New session id.
      */
     generate() {
-        return String(Date.now()) + String(Math.random()).slice(1, 7);
+        return String(Date.now()) + String(Math.random()).slice(2, 7);
     }
     /**
      * Get session object.
@@ -99,7 +114,7 @@ class RediSession {
      * @returns {boolean} Set exprise successed or not.
      */
     async refresh(id) {
-        return Boolean(await this.redis.expire(id, this.sessionOptions.maxAge || 3600));
+        return Boolean(await this.redis.expire(id, this.options.maxAge || 3600));
     }
     /**
      * @returns {Middleware} Return this ware.

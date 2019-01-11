@@ -2,7 +2,8 @@ import Koa, { Middleware } from 'koa';
 import { Options, Session } from './type';
 /** Session middleware class. */
 export declare class RediSession {
-    private sessionOptions;
+    private koa;
+    private options;
     /** Redis connection. */
     private redis;
     /** Cookie options on get. */
@@ -12,9 +13,13 @@ export declare class RediSession {
     /**
      * Config your own session pool.
      * @param {Koa} koa Koa instance.
-     * @param {Options} sessionOptions Session options.
+     * @param {Options} options Session options.
      */
-    constructor(koa: Koa, sessionOptions?: Options);
+    constructor(koa: Koa, options: Options);
+    /**
+     * Init RediSession.
+     */
+    private init;
     /**
      * RediSession middleware.
      * @param {Koa.Context} c Context.
