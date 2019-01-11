@@ -29,7 +29,7 @@ export class RediSession {
     this.getCookieOptions = { signed: true };
     this.setCookieOptions = {
       domain: sessionOptions.domain,
-      httpOnly: sessionOptions.httpOnly,
+      httpOnly: sessionOptions.httpOnly === undefined ? true : sessionOptions.httpOnly,
       maxAge: sessionOptions.maxAge * 1000,
       signed: true,
       overwrite: true
@@ -45,6 +45,7 @@ export class RediSession {
   public async session(c: Koa.Context, next: () => Promise<any>): Promise<void> {
     /** Session id. */
     let id = c.cookies.get(this.sessionOptions.name, this.getCookieOptions);
+    // let address = c.
     if ((id && await this.refresh(id)) || await this.add({ id: id = this.generate() })) {
       // Client has own session id and refresh session max age successfully,
       // or generate a new session successfully.
