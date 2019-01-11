@@ -14,9 +14,10 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 [Full Change Log](https://github.com/DevinDon/redisession/blob/master/dist/CHANGELOG.md)
 
-## 0.2.3 => 0.2.6
+## 0.2.6 => 0.2.7
 
-- Fixed cookie expires time.
+- refactor: use init method to do jobs
+- fix: set dafault value
 
 # Usage
 
