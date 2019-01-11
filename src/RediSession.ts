@@ -22,7 +22,7 @@ export class RediSession {
     koa: Koa,
     private sessionOptions: Options = { name: 'session.id' }
   ) {
-    sessionOptions.maxAge = sessionOptions.maxAge ? sessionOptions.maxAge : 1000 * 3600 * 24;
+    sessionOptions.maxAge = sessionOptions.maxAge ? sessionOptions.maxAge : 3600 * 24;
     // Set secert keys to encrypt cookies.
     koa.keys = sessionOptions.secert || ['default', 'secert', 'keys'];
     this.redis = new RedisInstance(sessionOptions.redis);
@@ -30,7 +30,7 @@ export class RediSession {
     this.setCookieOptions = {
       domain: sessionOptions.domain,
       httpOnly: sessionOptions.httpOnly,
-      maxAge: sessionOptions.maxAge,
+      maxAge: sessionOptions.maxAge * 1000,
       signed: true,
       overwrite: true
     };
