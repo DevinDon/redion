@@ -1,7 +1,7 @@
 import { GetOption, SetOption } from 'cookies';
 import RedisInstance, { Redis } from 'ioredis';
-import Koa, { Middleware } from 'koa';
-import { Options, Session } from './type';
+import Koa, { Middleware, ParameterizedContext } from 'koa';
+import { Options, Session } from './@types';
 
 /** Session middleware class. */
 export class RediSession {
@@ -15,6 +15,7 @@ export class RediSession {
 
   /**
    * Config your own session pool.
+   *
    * @param {Koa} koa Koa instance.
    * @param {Options} options Session options.
    */
@@ -56,11 +57,12 @@ export class RediSession {
 
   /**
    * RediSession middleware.
+   *
    * @param {Koa.Context} c Context.
    * @param {Promise<any>} next Next.
    * @returns {Promise<void>} void.
    */
-  public async session(c: Koa.Context, next: () => Promise<any>): Promise<void> {
+  public async session(c: ParameterizedContext, next: () => Promise<any>): Promise<void> {
     /** Session id. */
     let id = c.cookies.get(this.options.name as string, this.getCookieOptions);
     // let address = c.
@@ -80,6 +82,7 @@ export class RediSession {
 
   /**
    * Add or update a new session to pool.
+   *
    * @param {Session} session Session info.
    * @returns {Promise<boolean>} Successed refresh or not.
    */
@@ -90,6 +93,7 @@ export class RediSession {
 
   /**
    * Delete session by session id.
+   *
    * @param {string} id Session id.
    * @returns {number} Delete count.
    */
@@ -99,6 +103,7 @@ export class RediSession {
 
   /**
    * Destory this pool instance.
+   *
    * @returns {void} void.
    */
   public disconnect(): void {
@@ -107,6 +112,7 @@ export class RediSession {
 
   /**
    * Generate a new session id with time.
+   *
    * @returns {string} New session id.
    */
   public generate(): string {
@@ -115,6 +121,7 @@ export class RediSession {
 
   /**
    * Get session object.
+   *
    * @param {string} id Session id.
    * @returns {Promise<Session>} Session object. If no such session, return empty id.
    */
@@ -128,6 +135,7 @@ export class RediSession {
 
   /**
    * Refresh exprise time, second.
+   *
    * @param {string} id Session id.
    * @returns {boolean} Set exprise successed or not.
    */

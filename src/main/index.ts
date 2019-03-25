@@ -1,7 +1,7 @@
-import { Session } from './type';
+import { Session } from './@types';
 
 export * from './RediSession';
-export * from './type';
+export * from './@types';
 
 declare module 'koa' {
   interface Context {
