@@ -1,4 +1,4 @@
-# RediSession
+# Redion
 
 Session with redis.
 
@@ -6,18 +6,18 @@ Session with redis.
 
 This is a koa session middleware with **redis storage** and **TypeScript** supported, use in [KBS, Koa Backend Server](https://www.npmjs.com/package/koa-backend-server).
 
-[Github](https://github.com/DevinDon/redisession)
+[Github](https://github.com/DevinDon/redion)
 
-[NPM](https://www.npmjs.com/package/redisession)
+[NPM](https://www.npmjs.com/package/redion)
 
 # Change Log
 
-[Full Change Log](https://github.com/DevinDon/redisession/blob/master/dist/CHANGELOG.md)
+[Full Change Log](https://github.com/DevinDon/redion/blob/master/dist/CHANGELOG.md)
 
-## 0.2.6 => 0.2.7
+# 0.2.7 => 0.3.0
 
-- refactor: use init method to do jobs
-- fix: set dafault value
+- feat: catch connection exception
+- refactor: refactor source
 
 # Usage
 
@@ -27,10 +27,10 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 ```typescript
 import Koa, { Middleware } from 'koa';
-import { RediSession } from 'redisession';
+import { Redion } from 'redion';
 
 const app = new Koa();
-const session = new RediSession(app, { name: 'session.id' }).ware;
+const session = new Redion(app, { name: 'session.id' }).ware;
 
 app.use(session);
 
@@ -39,7 +39,7 @@ app.listen(80);
 
 ## Session Options
 
-[See the source code of the Session interface.](https://github.com/DevinDon/redisession/blob/master/src/type/index.ts)
+[See the source code of the Session interface.](https://github.com/DevinDon/redion/blob/master/src/type/index.ts)
 
 ```typescript
 /** Session middleware options. */
@@ -61,10 +61,10 @@ interface Options {
 }
 ```
 
-# License
-
-[MIT](./LICENSE)
-
 # Author
 
-[Devin Don(夜寒苏)](mailto:DevinDon@Foxmail.com)
+[IInfinity](mailto:I.INF@Outlook.com)
+
+# License
+
+[THE MIT LICENSE](LICENSE)
