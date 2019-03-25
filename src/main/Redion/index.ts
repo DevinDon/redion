@@ -25,7 +25,6 @@ export class Redion {
     private options: Options = { domain: 'localhost' }
   ) {
     this.options = Object.assign(
-      {},
       {
         domain: 'localhost',
         httpOnly: true,
@@ -39,6 +38,7 @@ export class Redion {
       },
       options
     );
+    this.options.redis = Object.assign({ retryStrategy: (times: number) => 10000 }, this.options.redis);
     this.init();
   }
 

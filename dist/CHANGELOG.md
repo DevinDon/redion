@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# 0.2.7 => 0.3.0
+## 0.3.0 => 0.3.1
+
+- fix: fix redis config assign
+
+## 0.2.7 => 0.3.0
 
 - feat: catch connection exception
 - refactor: refactor source

@@ -3,4 +3,4 @@ import { Redion } from '../../dist';
 
 logger.info('Hello, test!');
 
-const redion = new Redion({ key: ['test'] } as any);
+const redion = new Redion({ key: ['test'] } as any, { domain: 'localhost', redis: {} });

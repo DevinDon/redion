@@ -16,7 +16,7 @@ class Redion {
     constructor(koa, options = { domain: 'localhost' }) {
         this.koa = koa;
         this.options = options;
-        this.options = Object.assign({}, {
+        this.options = Object.assign({
             domain: 'localhost',
             httpOnly: true,
             maxAge: 24 * 3600 * 1000,
@@ -27,6 +27,7 @@ class Redion {
             },
             secert: ['default', 'secert', 'keys']
         }, options);
+        this.options.redis = Object.assign({ retryStrategy: (times) => 10000 }, this.options.redis);
         this.init();
     }
     /**

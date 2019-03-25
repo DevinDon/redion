@@ -14,7 +14,11 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/dist/CHANGELOG.md)
 
-# 0.2.7 => 0.3.0
+## 0.3.0 => 0.3.1
+
+- fix: fix redis config assign
+
+## 0.2.7 => 0.3.0
 
 - feat: catch connection exception
 - refactor: refactor source
