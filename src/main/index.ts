@@ -1,6 +1,6 @@
 import { Session } from './@types';
 
-export * from './RediSession';
+export * from './Redion';
 export * from './@types';
 
 declare module 'koa' {

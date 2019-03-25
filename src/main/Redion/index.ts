@@ -1,10 +1,11 @@
 import { GetOption, SetOption } from 'cookies';
 import RedisInstance, { Redis } from 'ioredis';
 import Koa, { Middleware, ParameterizedContext } from 'koa';
-import { Options, Session } from './@types';
+import { Options, Session } from '../@types';
+import { logger } from '@iinfinity/logger';
 
 /** Session middleware class. */
-export class RediSession {
+export class Redion {
 
   /** Redis connection. */
   private redis: Redis;
@@ -21,7 +22,7 @@ export class RediSession {
    */
   constructor(
     private koa: Koa,
-    private options: Options
+    private options: Options = { domain: 'localhost' }
   ) {
     this.options = Object.assign(
       {},
@@ -31,9 +32,11 @@ export class RediSession {
         maxAge: 24 * 3600 * 1000,
         name: 'session.id',
         overwrite: true,
-        redis: {},
+        redis: {
+          retryStrategy: (times: number) => 10000
+        },
         secert: ['default', 'secert', 'keys']
-      } as Options,
+      },
       options
     );
     this.init();
@@ -53,12 +56,15 @@ export class RediSession {
     };
     this.koa.keys = this.options.secert as string[];
     this.redis = new RedisInstance(this.options.redis);
+    this.redis.on('error', err => {
+      logger.error(`Connection failed, retry in 10 seconds. ${err}`);
+    });
   }
 
   /**
    * RediSession middleware.
    *
-   * @param {Koa.Context} c Context.
+   * @param {ParameterizedContext} c Context.
    * @param {Promise<any>} next Next.
    * @returns {Promise<void>} void.
    */
@@ -152,4 +158,4 @@ export class RediSession {
 
 }
 
-export default RediSession;
+export default Redion;
