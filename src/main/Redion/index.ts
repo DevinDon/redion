@@ -13,6 +13,10 @@ export class Redion {
   private getCookieOptions: GetOption;
   /** Cookie options on set. */
   private setCookieOptions: SetOption;
+  /** Remaining retries, default is 5. */
+  private retries = 10;
+  /** Retry interval, second. */
+  private retryInterval = 10;
 
   /**
    * Config your own session pool.
@@ -31,14 +35,12 @@ export class Redion {
         maxAge: 24 * 3600 * 1000,
         name: 'session.id',
         overwrite: true,
-        redis: {
-          retryStrategy: (times: number) => 10000
-        },
+        redis: {},
         secert: ['default', 'secert', 'keys']
       },
       options
     );
-    this.options.redis = Object.assign({ retryStrategy: (times: number) => 10000 }, this.options.redis);
+    this.options.redis = Object.assign({ retryStrategy: (times: number) => this.retries-- > 0 ? this.retryInterval * 1000 : false }, this.options.redis);
     this.init();
   }
 
@@ -57,7 +59,8 @@ export class Redion {
     this.koa.keys = this.options.secert as string[];
     this.redis = new RedisInstance(this.options.redis);
     this.redis.on('error', err => {
-      logger.error(`Connection failed, retry in 10 seconds. ${err}`);
+      logger.error(`Redis connection error: ${err}`);
+      logger.warn(`Redis connection remaining retries: ${this.retries} times...`);
     });
   }
 

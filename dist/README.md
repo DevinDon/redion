@@ -2,6 +2,10 @@
 
 Session with redis.
 
+## 0.3.1 => 0.3.2
+
+- perf: perf exception handle
+
 # Description
 
 This is a koa session middleware with **redis storage** and **TypeScript** supported, use in [KBS, Koa Backend Server](https://www.npmjs.com/package/koa-backend-server).

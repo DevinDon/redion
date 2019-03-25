@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1 => 0.3.2
+
+- perf: perf exception handle
+
 ## 0.3.0 => 0.3.1
 
 - fix: fix redis config assign

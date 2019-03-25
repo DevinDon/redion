@@ -10,6 +10,10 @@ export declare class Redion {
     private getCookieOptions;
     /** Cookie options on set. */
     private setCookieOptions;
+    /** Remaining retries, default is 5. */
+    private retries;
+    /** Retry interval, second. */
+    private retryInterval;
     /**
      * Config your own session pool.
      *

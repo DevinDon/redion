@@ -16,18 +16,20 @@ class Redion {
     constructor(koa, options = { domain: 'localhost' }) {
         this.koa = koa;
         this.options = options;
+        /** Remaining retries, default is 5. */
+        this.retries = 10;
+        /** Retry interval, second. */
+        this.retryInterval = 10;
         this.options = Object.assign({
             domain: 'localhost',
             httpOnly: true,
             maxAge: 24 * 3600 * 1000,
             name: 'session.id',
             overwrite: true,
-            redis: {
-                retryStrategy: (times) => 10000
-            },
+            redis: {},
             secert: ['default', 'secert', 'keys']
         }, options);
-        this.options.redis = Object.assign({ retryStrategy: (times) => 10000 }, this.options.redis);
+        this.options.redis = Object.assign({ retryStrategy: (times) => this.retries-- > 0 ? this.retryInterval * 1000 : false }, this.options.redis);
         this.init();
     }
     /**
@@ -45,7 +47,8 @@ class Redion {
         this.koa.keys = this.options.secert;
         this.redis = new ioredis_1.default(this.options.redis);
         this.redis.on('error', err => {
-            logger_1.logger.error(`Connection failed, retry in 10 seconds. ${err}`);
+            logger_1.logger.error(`Redis connection error: ${err}`);
+            logger_1.logger.warn(`Redis connection remaining retries: ${this.retries} times...`);
         });
     }
     /**
