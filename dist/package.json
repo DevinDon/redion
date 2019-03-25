@@ -1,6 +1,6 @@
 {
   "name": "@iinfinity/redion",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Session with redis.",
   "main": "index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/DevinDon/redion/dist",
   "dependencies": {
-    "@iinfinity/logger": "0.0.1",
+    "@iinfinity/logger": "^0.1.0",
     "@types/ioredis": "^4.0.10",
     "ioredis": "^4.9.0",
     "typescript": "^3.3.4000"
