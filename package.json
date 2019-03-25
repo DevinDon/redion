@@ -1,16 +1,17 @@
 {
-  "name": "redisession.source",
+  "name": "@iinfinity/redion.source",
   "version": "0.0.0",
-  "description": "Source code of redisession.",
+  "description": "Session storage with redis.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "ts-node src",
-    "test": "ts-node test"
+    "debug": "ts-node src/main",
+    "test": "ts-node src/test",
+    "watch": "tsc -w"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/DevinDon/redisession.git"
+    "url": "git+ssh://git@github.com/DevinDon/redion.git"
   },
   "private": true,
   "keywords": [
@@ -18,19 +19,23 @@
     "redis",
     "koa"
   ],
-  "author": "Devin Don <DevinDon@Foxmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DevinDon/redisession/issues"
+    "url": "https://github.com/DevinDon/redion/issues"
   },
-  "homepage": "https://github.com/DevinDon/redisession#readme",
+  "homepage": "https://github.com/DevinDon/redion/dist",
   "dependencies": {
-    "@types/ioredis": "^4.0.4",
-    "ioredis": "^4.3.0",
-    "ts-node": "^7.0.1",
-    "typescript": "^3.2.2"
+    "@iinfinity/logger": "0.0.1",
+    "@types/ioredis": "^4.0.10",
+    "ioredis": "^4.9.0",
+    "typescript": "^3.3.4000"
   },
   "devDependencies": {
-    "@types/koa": "^2.0.47"
-  }
+    "@types/koa": "^2.0.47",
+    "ts-node": "^8.0.3"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "author": "IInfinity <I.INF@Outlook.com> (https://don.red/)"
 }
