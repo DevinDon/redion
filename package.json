@@ -24,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/DevinDon/redion/issues"
   },
-  "homepage": "https://github.com/DevinDon/redion/dist",
+  "homepage": "https://github.com/DevinDon/redion",
   "dependencies": {
     "@iinfinity/logger": "^0.2.0",
     "@types/ioredis": "^4.0.10",
