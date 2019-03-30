@@ -41,13 +41,8 @@ export class Redion {
       options
     );
     this.options.redis = Object.assign({ retryStrategy: (times: number) => this.retries-- > 0 ? this.retryInterval * 1000 : false }, this.options.redis);
-    this.init();
-  }
-
-  /**
-   * Init RediSession.
-   */
-  private async init() {
+    this.redis = new RedisInstance(this.options.redis);
+    // Options
     this.getCookieOptions = { signed: true };
     this.setCookieOptions = {
       domain: this.options.domain,
@@ -57,7 +52,6 @@ export class Redion {
       overwrite: this.options.overwrite
     };
     this.koa.keys = this.options.secert as string[];
-    this.redis = new RedisInstance(this.options.redis);
     this.redis.on('error', err => {
       logger.error(`Redis connection error: ${err}`);
       logger.warn(`Redis connection remaining retries: ${this.retries} times...`);
