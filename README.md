@@ -12,7 +12,7 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 # Change Log
 
-[Full Change Log](https://github.com/DevinDon/redion/blob/master/dist/CHANGELOG.md)
+[Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
 ## 0.3.2 => 0.3.3
 
@@ -42,7 +42,7 @@ app.listen(80);
 
 ## Session Options
 
-[See the source code of the Session interface.](https://github.com/DevinDon/redion/blob/master/src/type/index.ts)
+[See the source code of the Session interface.](https://github.com/DevinDon/redion/blob/master/src/main/@types/index.ts)
 
 ```typescript
 /** Session middleware options. */
