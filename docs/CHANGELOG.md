@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.2 => 0.3.3
+
+- refactor: refactor project
+- chore: use jasmine test
+
 ## 0.3.1 => 0.3.2
 
 - perf: perf exception handle
