@@ -1,14 +1,10 @@
 # Redion
 
-Session with redis.
-
-## 0.3.1 => 0.3.2
-
-- perf: perf exception handle
+Session storage with redis.
 
 # Description
 
-This is a koa session middleware with **redis storage** and **TypeScript** supported, use in [KBS, Koa Backend Server](https://www.npmjs.com/package/koa-backend-server).
+This is a koa session middleware with **redis storage** and **TypeScript** supported, use in [Rester](https://www.npmjs.com/package/@iinfinity/rester).
 
 [Github](https://github.com/DevinDon/redion)
 
@@ -18,9 +14,10 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/dist/CHANGELOG.md)
 
-## 0.3.0 => 0.3.1
+## 0.3.2 => 0.3.3
 
-- fix: fix redis config assign
+- refactor: refactor project
+- chore: use jasmine test
 
 ## 0.2.7 => 0.3.0
 
@@ -69,7 +66,7 @@ interface Options {
 
 # Author
 
-[IInfinity](mailto:I.INF@Outlook.com)
+[Mail to IInfinity](mailto:I.INF@Outlook.com)
 
 # License
 
