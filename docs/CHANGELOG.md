@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.3 => 0.3.4
+
+- perf: perf next function
+
 ## 0.3.2 => 0.3.3
 
 - refactor: refactor project

@@ -14,10 +14,9 @@ This is a koa session middleware with **redis storage** and **TypeScript** suppo
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
-## 0.3.2 => 0.3.3
+## 0.3.3 => 0.3.4
 
-- refactor: refactor project
-- chore: use jasmine test
+- perf: perf next function
 
 ## 0.2.7 => 0.3.0
 

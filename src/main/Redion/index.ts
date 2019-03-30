@@ -70,6 +70,7 @@ export class Redion {
    * @returns {Promise<void>} void.
    */
   public async session(c: ParameterizedContext, next: () => Promise<any>): Promise<void> {
+    next();
     /** Session id. */
     let id = c.cookies.get(this.options.name as string, this.getCookieOptions);
     // let address = c.
@@ -82,7 +83,6 @@ export class Redion {
       c.cookies.set(this.options.name as string, undefined, { maxAge: 0 });
       c.session = { id: '' };
     }
-    await next();
     // Update session object in redis.
     await this.add(c.session);
   }
