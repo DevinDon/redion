@@ -1,6 +1,6 @@
 {
   "name": "@iinfinity/redion",
-  "version": "0.3.4",
+  "version": "0.4.0",
   "description": "Session storage with redis.",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,7 @@
   "keywords": [
     "session",
     "redis",
+    "memory",
     "koa"
   ],
   "license": "MIT",
@@ -26,18 +27,18 @@
   },
   "homepage": "https://github.com/DevinDon/redion",
   "dependencies": {
-    "@iinfinity/logger": "^0.2.0",
-    "@types/ioredis": "^4.0.10",
-    "ioredis": "^4.9.0",
-    "typescript": "^3.3.4000"
+    "@iinfinity/logger": "latest",
+    "ioredis": "^4.9.0"
   },
   "devDependencies": {
-    "@types/jasmine": "^3.3.12",
-    "@types/node": "^11.12.1",
-    "jasmine": "^3.3.1",
+    "@types/ioredis": "^4.0.10",
+    "@types/jasmine": "latest",
+    "@types/koa": "latest",
+    "@types/node": "latest",
+    "jasmine": "^3.4.0",
     "jasmine-console-reporter": "^3.1.0",
-    "@types/koa": "^2.0.48",
-    "ts-node": "^8.0.3"
+    "ts-node": "latest",
+    "typescript": "latest"
   },
   "directories": {
     "doc": "docs",
