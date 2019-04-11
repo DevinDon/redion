@@ -50,7 +50,7 @@ export class Redion {
    *
    * @returns {string} New session id.
    */
-  public generate(): string {
+  private generate(): string {
     return `${Date.now()}-${++this.serial}`;
   }
 
