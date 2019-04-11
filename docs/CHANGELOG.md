@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 0.3.4 => 0.4.0
+
+- feat: local storage support
+- refactor: refactor redis storage support
+- refactor: refactor class Redion
+
 ## 0.3.3 => 0.3.4
 
 - perf: perf next function
