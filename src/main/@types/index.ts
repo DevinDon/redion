@@ -1,25 +1,36 @@
 import { RedisOptions } from 'ioredis';
+import Koa from 'koa';
 
 /** Session infomation. */
+// export type Session = Map<string, any>;
 export interface Session {
-  id: string;
   [index: string]: any;
+  id: string;
+  /** Expire at this time, UTC millionseconds */
+  __expireAt: number;
 }
 
-/** Session middleware options. */
-export interface Options {
-  /** Domain. */
+/** Session middleware option. */
+export interface Option {
+  /** Cookie domain. */
   domain: string;
-  /** Http Only. */
-  httpOnly?: boolean;
   /** Expire time, second. */
-  maxAge?: number;
-  /** Name of session id. */
-  name?: string;
-  /** Can be overwrite. */
-  overwrite?: boolean;
+  expire: number;
+  /** File storage, for local only. */
+  file?: string;
+  /** Koa instance for signing cookie. */
+  koa: Koa;
+  /** Cookie name of session id. */
+  name: string;
   /** Redis connection options. */
   redis?: RedisOptions;
-  /** Secert keys. */
-  secert?: string[];
+  /** Signed your cookie with this array. */
+  secert: string[];
+}
+
+/** DBFile. */
+export interface DBFile {
+  keys: string[];
+  values: Session[];
+  size: number;
 }
