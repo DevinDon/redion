@@ -1,4 +1,5 @@
-import { Local, Storage, Option, Session } from '../../main';
+import { delay } from '@iinfinity/delay';
+import { Local, Option, Session, Storage } from '../../main';
 
 describe('local storage test', () => {
 
@@ -30,7 +31,7 @@ describe('local storage test', () => {
     done();
   });
 
-  it('should be set correctly', async done => {
+  it('should get & set correctly', async done => {
     expect(await storage.set(session)).toBeTruthy();
     expect(await storage.get<Session>(session.id)).toEqual(session);
     done();
@@ -38,10 +39,22 @@ describe('local storage test', () => {
 
   it('should expire correctly', async done => {
     expect(await storage.set(session)).toBeTruthy();
-    setTimeout(async () => {
-      expect(await storage.get(session.id)).toBeUndefined();
-      done();
-    }, 1000);
+    expect(await delay(1000, () => storage.get(session.id))).toBeUndefined();
+    done();
+  });
+
+  it('should delete correctly', async done => {
+    expect(await storage.set(session)).toBeTruthy();
+    expect(await storage.delete(session.id)).toBeTruthy();
+    expect(await storage.get(session.id)).toBeUndefined();
+    done();
+  });
+
+  it('should refresh correctly', async done => {
+    expect(await storage.set(session)).toBeTruthy();
+    expect(await delay(600, () => storage.refresh(session.id))).toBeTruthy();
+    expect(await delay(600, () => storage.get(session.id))).toEqual(session);
+    done();
   });
 
 });
