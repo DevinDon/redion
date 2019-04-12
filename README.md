@@ -4,69 +4,90 @@ Session storage with redis.
 
 # Description
 
-This is a koa session middleware with **redis storage** and **TypeScript** supported, use in [Rester](https://www.npmjs.com/package/@iinfinity/rester).
+This is a koa session middleware with **redis / local storage** and **TypeScript** supported, use in [Rester](https://www.npmjs.com/package/@iinfinity/rester) server framework on NPM.
 
-[Github](https://github.com/DevinDon/redion)
+[See source code on GitHub](https://github.com/DevinDon/redion)
 
-[NPM](https://www.npmjs.com/package/redion)
+[See release package on NPM](https://www.npmjs.com/package/@iinfinity/redion)
 
 # Change Log
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
-## 0.3.3 => 0.3.4
+## 0.3.4 => 0.4.0
 
-- perf: perf next function
-
-## 0.2.7 => 0.3.0
-
-- feat: catch connection exception
-- refactor: refactor source
+- feat: local storage support
+- refactor: refactor redis storage support
+- refactor: refactor class Redion
 
 # Usage
 
-## Quick start
+## For Koa
 
 ```typescript
-import Koa, { Middleware } from 'koa';
-import { Redion } from 'redion';
+import { Option, Redion } from '@iinfinity/redion';
+import Koa from 'koa'; // import koa
 
-const app = new Koa();
-const session = new Redion(app, { name: 'session.id' }).ware;
+const koa = new Koa(/** ... */);
 
-app.use(session);
+const option: Option = {
+  domain: 'your.domain.com',
+  expire: 1000, // second
+  koa, // your koa instance, for signing cookie
+  name: 'session.id', // cookie key of session id
+  secert: ['your', 'secert', 'keys'] // signed your cookie with this array
+};
 
-app.listen(80);
+koa.use(new Redion(option).ware);
 ```
 
-## Session Options
+## For Rester
+
+```typescript
+import { Option, Redion } from '@iinfinity/redion';
+import Rester from '@iinfinity/rester'; // import rester
+
+const rester = new Rester(/** ... */);
+
+const option: Option = {
+  domain: 'your.domain.com',
+  expire: 1000, // second
+  koa: rester.koa, // your koa instance, for signing cookie
+  name: 'session.id', // cookie key of session id
+  secert: ['your', 'secert', 'keys'] // signed your cookie with this array
+};
+
+rester.use({
+  'redis session middleware': new Redion(option).ware
+});
+```
+
+## Option
 
 [See the source code of the Session interface.](https://github.com/DevinDon/redion/blob/master/src/main/@types/index.ts)
 
 ```typescript
-/** Session middleware options. */
-interface Options {
+/** Session middleware option. */
+export interface Option {
+  /** Cookie domain. */
+  domain: string;
   /** Expire time, second. */
-  maxAge?: number;
-  /** Domain. */
-  domain?: string;
-  /** Http Only. */
-  httpOnly?: boolean;
-  /** Name of session id. */
+  expire: number;
+  /** File storage, for local only. */
+  file?: string;
+  /** Koa instance for signing cookie. */
+  koa: Koa;
+  /** Cookie name of session id. */
   name: string;
-  /** Can be overwrite. */
-  overwrite?: boolean;
   /** Redis connection options. */
   redis?: RedisOptions;
-  /** Secert keys. */
-  secert?: string[];
+  /** Signed your cookie with this array. */
+  secert: string[];
 }
 ```
 
-# Author
+# License
 
 [Mail to IInfinity](mailto:I.INF@Outlook.com)
-
-# License
 
 [THE MIT LICENSE](https://github.com/DevinDon/redion/blob/master/LICENSE)
