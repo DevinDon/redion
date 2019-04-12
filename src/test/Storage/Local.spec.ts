@@ -32,7 +32,7 @@ describe('local storage test', () => {
 
   it('should be set correctly', async done => {
     expect(await storage.set(session)).toBeTruthy();
-    expect(await storage.get<Session>(session.id)).toBe(session);
+    expect(await storage.get<Session>(session.id)).toEqual(session);
     done();
   });
 
@@ -41,7 +41,7 @@ describe('local storage test', () => {
     setTimeout(async () => {
       expect(await storage.get(session.id)).toBeUndefined();
       done();
-    }, 1500);
+    }, 1000);
   });
 
 });
