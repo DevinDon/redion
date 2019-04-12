@@ -6,8 +6,8 @@ import Koa from 'koa';
 export interface Session {
   [index: string]: any;
   id: string;
-  /** Expire at this time, UTC millionseconds */
-  __expireAt: number;
+  // /** Expire at this time, UTC millionseconds */
+  // __expireAt: number;
 }
 
 /** Session middleware option. */

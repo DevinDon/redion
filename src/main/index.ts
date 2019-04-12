@@ -1,7 +1,7 @@
+import Logger from '@iinfinity/logger';
 import { Middleware } from 'koa';
 import { Option, Session } from './@types';
 import { Local, Redis, Storage } from './Storage';
-import Logger from '@iinfinity/logger';
 
 export * from './@types';
 export * from './Storage';
@@ -34,14 +34,14 @@ export class Redion {
   /** Session middleware. */
   private session: Middleware = async (c, next) => {
     let id = c.cookies.get(this.option.name, { signed: true });
-    if ((id && await this.storage.refresh(id)) || await this.storage.set({ id: id = this.generate(), __expireAt: Date.now() + this.option.expire * 1000 })) {
+    if ((id && await this.storage.refresh(id)) || await this.storage.set({ id: id = this.generate() })) {
       c.cookies.set(this.option.name, id, { domain: this.option.domain, httpOnly: true, maxAge: this.option.expire * 1000, signed: true, overwrite: true });
       c.session = await this.storage.get(id);
     } else {
       c.cookies.set(this.option.name, undefined, { maxAge: 0 });
-      c.session = { id: '', __expire: Date.now() };
+      c.session = { id: '' };
     }
-    next();
+    await next();
     this.storage.set(c.session);
   }
 

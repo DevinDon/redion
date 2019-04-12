@@ -5,22 +5,29 @@ import { DBFile, Option, Session } from '../@types';
 
 export class Local implements Storage {
 
-  private storage: Map<string, any>;
+  /** Storage, memory. */
+  private storage: Map<string, any> = new Map();
+  /** Expire map. */
+  private expire: Map<string, number> = new Map();
 
   /**
    * Create local session storage.
    *
    * @param {Option} option Local session option.
    */
-  constructor(private option: Option) {
-    this.storage = new Map();
-  }
+  constructor(private option: Option) { }
 
   async close(): Promise<void> { }
 
   async delete(id: string): Promise<boolean> {
-    this.storage.delete(`expire-${id}`);
-    return this.storage.delete(id);
+    try {
+      this.storage.delete(id);
+      this.expire.delete(id);
+      return true;
+    } catch (err) {
+      logger.error(`Cannot delete session: ${err}`);
+      return false;
+    }
   }
 
   async get<T = Session>(id: string): Promise<T | undefined> {
@@ -45,23 +52,24 @@ export class Local implements Storage {
   async refresh(id: string): Promise<boolean> {
     logger.debug('keys: ', Array.from(this.storage.keys()));
     logger.debug('values: ', JSON.stringify(Array.from(this.storage.values())));
-    if (this.storage.has(id)) {
-      const session: Session = this.storage.get(id);
-      if (session.__expireAt > Date.now()) { // refresh successfully
-        session.__expireAt = Date.now() + this.option.expire * 1000;
+    if (this.expire.has(id) && this.storage.has(id)) {
+      if (this.expire.get(id) as number > Date.now()) { // refresh successfully
+        this.expire.set(id, Date.now() + this.option.expire * 1000);
         return true;
       } else { // session timeout
         this.storage.delete(id);
-        logger.info(`Session timeout, ID: ${id}`);
+        this.expire.delete(id);
+        logger.debug(`Session timeout, ID: ${id}`);
         return false;
       }
     } else { // session not found
-      logger.info(`No such session, ID: ${id}`);
+      this.storage.delete(id);
+      this.expire.delete(id);
+      logger.debug(`No such session, ID: ${id}`);
       return false;
     }
   }
 
-  // TO-DO: Save session to local.
   async save(): Promise<boolean> {
     if (this.option.file) {
       try {
@@ -83,7 +91,16 @@ export class Local implements Storage {
   }
 
   async set(session: Session): Promise<boolean> {
-    return Boolean(this.storage.set(session.id, session));
+    try {
+      this.storage.set(session.id, session);
+      this.expire.set(session.id, Date.now() + this.option.expire * 1000);
+      return true;
+    } catch (err) {
+      this.storage.delete(session.id);
+      this.expire.delete(session.id);
+      logger.error(`Cannot set session: ${err}`);
+      return false;
+    }
   }
 
 }
