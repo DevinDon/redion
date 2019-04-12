@@ -50,8 +50,6 @@ export class Local implements Storage {
   }
 
   async refresh(id: string): Promise<boolean> {
-    logger.debug('keys: ', Array.from(this.storage.keys()));
-    logger.debug('values: ', JSON.stringify(Array.from(this.storage.values())));
     if (this.expire.has(id) && this.storage.has(id)) {
       if (this.expire.get(id) as number > Date.now()) { // refresh successfully
         this.expire.set(id, Date.now() + this.option.expire * 1000);
