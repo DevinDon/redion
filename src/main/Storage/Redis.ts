@@ -55,7 +55,7 @@ export class Redis implements Storage {
 
   async set(session: Session): Promise<boolean> {
     return this.storage.set(session.id, JSON.stringify(session))
-      .then(v => true)
+      .then(v => this.refresh(session.id))
       .catch(r => false);
   }
 
