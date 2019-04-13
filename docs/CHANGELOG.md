@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0 => 0.4.1
+
+- perf: perf source project
+
 ## 0.3.4 => 0.4.0
 
 - feat: local storage support
