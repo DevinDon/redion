@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.1 => 0.4.2
+
+- fix: fix export of class Redion
+
 ## 0.4.0 => 0.4.1
 
 - refactor: refactor code

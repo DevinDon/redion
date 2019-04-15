@@ -14,9 +14,9 @@ This is a koa session middleware with **redis / local storage** and **TypeScript
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
-## 0.4.0 => 0.4.1
+## 0.4.1 => 0.4.2
 
-- refactor: refactor code
+- fix: fix export of class Redion
 
 ## 0.3.4 => 0.4.0
 
