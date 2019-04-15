@@ -1,33 +1,33 @@
-// import { Logger } from '@iinfinity/logger';
+import { Logger } from '@iinfinity/logger';
 
-// // type Decorator = (target: any, name: string, descriptor: PropertyDescriptor) => any;
-// type Decorator = (target: any) => any;
+// type Decorator = (target: any, name: string, descriptor: PropertyDescriptor) => any;
+type Decorator = (target: any) => any;
 
-// export function onClass(): Decorator {
-//   return target => {
-//     // return descriptor;
-//   };
-// }
+export function onClass(): Decorator {
+  return target => {
+    // return descriptor;
+  };
+}
 
-// export function onProperty() {
-//   return (target: any, name: string) => {
+export function onProperty() {
+  return (target: any, name: string) => {
 
-//   };
-// }
+  };
+}
 
-// export function onMethod() {
-//   return (target: any, name: string, descriptor: PropertyDescriptor) => {
+export function onMethod() {
+  return (target: any, name: string, descriptor: PropertyDescriptor) => {
 
-//   };
-// }
+  };
+}
 
-// @onClass()
-// class A {
+@onClass()
+class A {
 
-//   @onProperty()
-//   private logger: Logger;
+  @onProperty()
+  private logger: Logger;
 
-//   @onMethod()
-//   doSomething() { }
+  @onMethod()
+  doSomething() { }
 
-// }
+}
