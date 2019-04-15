@@ -9,9 +9,10 @@ export class Redis implements Storage {
 
   constructor(private option: Option) {
     option.redis = Object.assign(
-      { retryStrategy: (times: number) => times * 1000 },
+      { retryStrategy: (times: number) => (logger.info(`Reconnecting to redis...`), times > 10 ? 10 * 1000 : times * 1000) },
       option.redis
     );
+    logger.info(`Connecting to redis...`);
     this.storage = new IORedis(option.redis);
     this.storage.on('connect', v => {
       logger.info(`Redis storage connected.`);
