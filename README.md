@@ -1,6 +1,6 @@
 # Redion
 
-Session storage with redis.
+Session with redis storage or local storage.
 
 # Description
 
@@ -16,7 +16,7 @@ This is a koa session middleware with **redis / local storage** and **TypeScript
 
 ## 0.4.0 => 0.4.1
 
-- perf: perf source project
+- refactor: refactor code
 
 ## 0.3.4 => 0.4.0
 

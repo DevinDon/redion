@@ -2,7 +2,7 @@
 
 ## 0.4.0 => 0.4.1
 
-- perf: perf source project
+- refactor: refactor code
 
 ## 0.3.4 => 0.4.0
 
