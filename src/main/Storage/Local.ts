@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'fs';
-import { Storage } from '.';
+import { Storage } from './Storage';
 import { logger } from '..';
 import { DBFile, Option, Session } from '../@types';
 

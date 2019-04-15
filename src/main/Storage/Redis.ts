@@ -1,5 +1,5 @@
 import IORedis from 'ioredis';
-import { Storage } from '.';
+import { Storage } from './Storage';
 import { Option, Session } from '../@types';
 import { logger } from '..';
 
