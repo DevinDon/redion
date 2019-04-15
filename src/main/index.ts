@@ -4,7 +4,7 @@ import { Session } from './@types';
 export const logger = new Logger('Redion');
 
 export * from './@types';
-export * from './Storage';
+export * from './storage';
 
 declare module 'koa' {
   interface Context {

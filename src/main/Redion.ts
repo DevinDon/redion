@@ -1,6 +1,6 @@
 import { Middleware } from 'koa';
 import { Option } from './@types';
-import { Local, Redis, Storage } from './Storage';
+import { Local, Redis, Storage } from './storage';
 
 export class Redion {
 
