@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.2 => 0.4.3
+
+- chore(package): fix package deps
+
 ## 0.4.1 => 0.4.2
 
 - fix: fix export of class Redion
