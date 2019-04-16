@@ -11,7 +11,6 @@ describe('redis storage test', () => {
       name: 'session.id',
       expire: 1,
       domain: 'localhost',
-      koa: {} as any,
       redis: {
         host: 'a-1.don.red'
       },

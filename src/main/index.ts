@@ -1,4 +1,4 @@
-import Logger from '@iinfinity/logger';
+import { Logger } from '@iinfinity/logger';
 import { Session } from './@types';
 
 export const logger = new Logger('Redion');
