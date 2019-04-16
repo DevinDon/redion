@@ -14,9 +14,9 @@ This is a koa session middleware with **redis / local storage** and **TypeScript
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
-## 0.4.2 => 0.4.3
+## 0.4.3 => 0.4.4
 
-- chore(package): fix package deps
+- fix: fix koa prop of session option
 
 ## 0.3.4 => 0.4.0
 

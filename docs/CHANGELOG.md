@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 0.4.3 => 0.4.4
+
+- fix: fix koa prop of session option
+
 ## 0.4.2 => 0.4.3
 
-- chore(package): fix package deps
+- chore: fix package deps
 
 ## 0.4.1 => 0.4.2
 

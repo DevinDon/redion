@@ -13,7 +13,6 @@ export class Redion {
     private option: Option
   ) {
     this.serial = 0;
-    this.option.koa.keys = this.option.secert;
     this.storage = option.redis ? new Redis(option) : new Local(option);
   }
 
