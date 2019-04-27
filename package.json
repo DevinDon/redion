@@ -1,6 +1,6 @@
 {
   "name": "@iinfinity/redion",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "Session with redis storage or local storage.",
   "main": "index.js",
   "scripts": {
@@ -29,10 +29,10 @@
   "dependencies": {
     "@iinfinity/delay": "0.x",
     "@iinfinity/logger": "0.x",
-    "@types/ioredis": "4.x",
     "ioredis": "4.x"
   },
   "devDependencies": {
+    "@types/ioredis": "^4.0.10",
     "@types/jasmine": "3.x",
     "@types/koa": "2.x",
     "@types/node": "11.x",

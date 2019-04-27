@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.5 => 0.4.6
+
+- chore: move @types/ioredis to dev
+
 ## 0.4.4 => 0.4.5
 
 - chore: update package

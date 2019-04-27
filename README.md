@@ -14,9 +14,9 @@ This is a koa session middleware with **redis / local storage** and **TypeScript
 
 [Full Change Log](https://github.com/DevinDon/redion/blob/master/docs/CHANGELOG.md)
 
-## 0.4.4 => 0.4.5
+## 0.4.5 => 0.4.6
 
-- chore: update package
+- chore: move @types/ioredis to dev
 
 ## 0.3.4 => 0.4.0
 
